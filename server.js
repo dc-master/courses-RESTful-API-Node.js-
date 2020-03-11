@@ -1,4 +1,3 @@
-const joi = require('joi');
 const express = require('express');
 const { mongoose } = require('./models/mongoose');
 const { Author, Course } = require('./models/models');
