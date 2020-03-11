@@ -1,26 +1,37 @@
-const { mongoose } = require('./models/mongoose');
-const { User, Course } = require('./models/models');
+const { mongoose } = require('../models/mongoose');
+const { User, Course } = require('../models/models');
 
 var createCourse = async(name, authors) => {
-    const course = new Course({
+    let course = new Course({
         name,
         authors
     });
-    const res = await course.save();
-    console.log(res);
+    let res = await course.save();
+    return res;
 }
 
 var addLesson = async(courseId, lesson) => {
-    const course = await Course.findById(courseId);
-    course.lesson.push(lesson);
-    course.save();
+    try {
+        let course = await Course.findById(courseId);
+        course.lessons.push(lesson);
+        console.log(course);
+        course.save();
+        return course;
+    } catch (error) {
+        return error;
+    }
 }
 
 var removeLesson = async(courseId, lessonId) => {
-    const course = await Course.findById(courseId);
-    const lesson = course.lesson.id(lessonId);
-    lesson.remove();
-    course.save();
+    try {
+        let course = await Course.findById(courseId);
+        let lesson = course.lessons.id(lessonId);
+        lesson.remove();
+        course.save();
+        return course;
+    } catch (error) {
+        return error;
+    }
 }
 
 module.exports = {
